@@ -5,53 +5,121 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vivika ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<!-- NEW PREMIUM FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#000;color:#fff;overflow:hidden}
+body{font-family:'Montserrat',sans-serif;background:#000;color:white;overflow:hidden}
 
 .page1{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
-.title{font-size:3rem}
 
-.btn{margin-top:30px;padding:14px 28px;border-radius:50px;border:none;background:#fff;color:#000;cursor:pointer}
+/* PREMIUM TITLE */
+.title{
+  font-family:'Cinzel',serif;
+  font-size:3.5rem;
+  letter-spacing:3px;
+  text-align:center;
+}
+
+.subtitle{
+  margin-top:10px;
+  font-size:1.2rem;
+  opacity:0.8;
+}
+
+.btn{
+  margin-top:40px;
+  padding:14px 30px;
+  border-radius:50px;
+  border:1px solid rgba(255,255,255,0.3);
+  background:transparent;
+  color:white;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.btn:hover{background:white;color:black}
 
 .page2{display:none;height:100vh;width:100%;background:url('image.jpg') center/cover}
-.overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.7)}
+.overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.75)}
 
-.card{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);padding:30px;border-radius:20px;background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);text-align:center}
+.scroll-container{
+  position:absolute;
+  width:100%;
+  bottom:-100%;
+  text-align:center;
+  animation:scrollUp 12s linear forwards;
+}
 
-.love{font-size:2.5rem;color:#ff2d55}
+.line{font-size:1.6rem;margin:15px 0}
 
-button{padding:10px 20px;margin:10px;border-radius:20px;border:none;cursor:pointer}
+.love{
+  font-size:3rem;
+  font-family:'Cinzel',serif;
+  color:#ff2d55;
+  margin-top:20px;
+}
+
+.final{
+  font-size:2rem;
+  margin-top:15px;
+  font-weight:600;
+}
+
+.buttons{margin-top:25px}
+button{padding:12px 24px;margin:10px;border-radius:30px;border:none;cursor:pointer}
 .yes{background:#ff2d55;color:white}
 .no{background:white;color:black;position:relative}
 
 canvas{position:fixed;top:0;left:0;pointer-events:none}
+
+@keyframes scrollUp{
+  0%{bottom:-100%}
+  100%{bottom:25%}
+}
 </style>
 </head>
 <body>
 
+<!-- 💡 NEW INTRO IDEAS IMPLEMENTED -->
 <div class="page1">
-  <h1 class="title">Hello VIVIKA ❤️</h1>
+  <h1 class="title">A LITTLE STORY FOR YOU ❤️</h1>
   <button class="btn" onclick="startJourney()">Begin</button>
 </div>
 
 <div class="page2" id="page2">
   <div class="overlay"></div>
 
-  <div class="card">
-    <p>From the moment I met you ✨</p>
-    <h1 class="love">I LOVE YOU</h1>
-    <p>Will you marry me on 7-7-2032? 💍</p>
+  <div class="scroll-container">
+    <p class="line">
+      From the moment you entered my life, everything changed in the most beautiful way.<br><br>
+      You didn’t just bring happiness — you became the reason behind my every smile, my every heartbeat, and my every dream.<br><br>
 
-    <button class="yes" onclick="sayYes()">YES</button>
-    <button class="no" onmouseover="moveNo(this)">NO</button>
+      With you, love feels effortless… like the world finally makes sense.<br>
+      Your laughter is my favorite melody, your eyes hold my universe, and your presence is the peace I never knew I needed.<br><br>
+
+      I don’t promise a perfect life, but I promise to stand by you through every high and low,
+      to hold your hand when things get tough, and to love you a little more with each passing day.<br><br>
+
+      If forever exists anywhere… I want it to be with you.<br><br>
+
+      So today, with all the love I carry in my heart, I ask you—
+    </p>
+
+    <h1 class="love">I LOVE YOU ❤️</h1>
+    <h2 class="final">WILL YOU MARRY ME ON 7-7-2032 💍</h2>
+
+    <div class="buttons">
+      <button class="yes" onclick="sayYes()">YES 💖</button>
+      <button class="no" onclick="stopMusic();moveNo(this)">NO 😢</button>
+    </div>
+  </div>
   </div>
 </div>
 
 <canvas id="fireworks"></canvas>
-<audio id="music" src="music.mp3"></audio>
+<audio id="music" src="music.mp3" loop></audio>
 
 <script>
 function startJourney(){
@@ -60,11 +128,14 @@ function startJourney(){
   document.getElementById('music').play().catch(()=>{});
 }
 
+function stopMusic(){
+  document.getElementById('music').pause();
+}
+
 function moveNo(btn){
   btn.style.transform=`translate(${Math.random()*200}px,${Math.random()*200}px)`;
 }
 
-// FIREWORKS
 const canvas=document.getElementById('fireworks');
 const ctx=canvas.getContext('2d');
 canvas.width=innerWidth;
@@ -90,6 +161,7 @@ animate();
 
 async function sayYes(){
   createFirework();
+  stopMusic();
   await fetch('/yes',{method:'POST'});
   window.open('https://wa.me/+919160288329?text=She said YES ❤️');
 }
@@ -97,5 +169,4 @@ async function sayYes(){
 
 </body>
 </html>
-
 
