@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivika ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#000;color:#fff;overflow:hidden}
+
+.page1{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.title{font-size:3rem}
+
+.btn{margin-top:30px;padding:14px 28px;border-radius:50px;border:none;background:#fff;color:#000;cursor:pointer}
+
+.page2{display:none;height:100vh;width:100%;background:url('image.jpg') center/cover}
+.overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.7)}
+
+.card{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);padding:30px;border-radius:20px;background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);text-align:center}
+
+.love{font-size:2.5rem;color:#ff2d55}
+
+button{padding:10px 20px;margin:10px;border-radius:20px;border:none;cursor:pointer}
+.yes{background:#ff2d55;color:white}
+.no{background:white;color:black;position:relative}
+
+canvas{position:fixed;top:0;left:0;pointer-events:none}
+</style>
+</head>
+<body>
+
+<div class="page1">
+  <h1 class="title">Hello VIVIKA ❤️</h1>
+  <button class="btn" onclick="startJourney()">Begin</button>
+</div>
+
+<div class="page2" id="page2">
+  <div class="overlay"></div>
+
+  <div class="card">
+    <p>From the moment I met you ✨</p>
+    <h1 class="love">I LOVE YOU</h1>
+    <p>Will you marry me on 7-7-2032? 💍</p>
+
+    <button class="yes" onclick="sayYes()">YES</button>
+    <button class="no" onmouseover="moveNo(this)">NO</button>
+  </div>
+</div>
+
+<canvas id="fireworks"></canvas>
+<audio id="music" src="music.mp3"></audio>
+
+<script>
+function startJourney(){
+  document.querySelector('.page1').style.display='none';
+  document.querySelector('.page2').style.display='block';
+  document.getElementById('music').play().catch(()=>{});
+}
+
+function moveNo(btn){
+  btn.style.transform=`translate(${Math.random()*200}px,${Math.random()*200}px)`;
+}
+
+// FIREWORKS
+const canvas=document.getElementById('fireworks');
+const ctx=canvas.getContext('2d');
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+let particles=[];
+
+function createFirework(){
+  for(let i=0;i<120;i++){
+    particles.push({x:canvas.width/2,y:canvas.height/2,dx:(Math.random()-0.5)*8,dy:(Math.random()-0.5)*8,life:100});
+  }
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    p.x+=p.dx;p.y+=p.dy;p.life--;
+    ctx.fillRect(p.x,p.y,2,2);
+  });
+  particles=particles.filter(p=>p.life>0);
+  requestAnimationFrame(animate);
+}
+animate();
+
+async function sayYes(){
+  createFirework();
+  await fetch('/yes',{method:'POST'});
+  window.open('https://wa.me/+919160288329?text=She said YES ❤️');
+}
+</script>
+
+</body>
+</html>
+
+
